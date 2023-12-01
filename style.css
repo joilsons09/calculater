@@ -1,0 +1,25 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 50px;
+  }
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  input {
+    padding: 8px;
+    margin-bottom: 15px;
+  }
+  button {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  #resultado {
+    font-weight: bold;
+    margin-top: 10px;
+  }
