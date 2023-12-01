@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 50px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    input {
+      padding: 8px;
+      margin-bottom: 15px;
+    }
+    button {
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #resultado {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+  </style>
+  <title>Calculadora BB/100</title>
+</head>
+<body>
+  <h2>Calculadora BB/100</h2>
+  
+  <label for="numeroMaosInput">Número de mãos:</label>
+  <input type="text" id="numeroMaosInput" placeholder="Número de mãos">
+
+  <label for="bbInput">bb/100:</label>
+  <input type="text" id="bbInput" placeholder="bb/100">
+
+  <label for="porcentagemInput">Porcentagem recebida (%):</label>
+  <input type="text" id="porcentagemInput" placeholder="Porcentagem recebida (até 100%)" oninput="limitarPorcentagem(this)">
+
+  <label for="conversaoInput">Conversão 1 BB para $:</label>
+  <input type="text" id="conversaoInput" placeholder="Valor da conversão">
+  
+  <br>
+
+  <button onclick="calcularResultadoFinal()">Calcular Resultado</button>
+
+  <div id="resultado"></div>
+
+  <script>
+    function calcularResultado(numeroMaos, bbPor100, porcentagemRecebida, valorConversao) {
+      const resultadoBB = (numeroMaos / 100) * bbPor100;
+      const resultadoDolar = resultadoBB * valorConversao;
+      const resultadoFinal = resultadoDolar * (Math.min(porcentagemRecebida, 100) / 100);
+      return resultadoFinal;
+    }
+
+    function formatarDinheiro(valor) {
+      return `$${valor.toFixed(2)}`;
+    }
+
+    function limitarPorcentagem(element) {
+      const valor = parseFloat(element.value);
+      if (!isNaN(valor) && valor > 100) {
+        element.value = 100;
+      }
+    }
+
+    function calcularResultadoFinal() {
+      const numeroMaos = parseFloat(document.getElementById('numeroMaosInput').value);
+      const bbPor100 = parseFloat(document.getElementById('bbInput').value);
+      const porcentagemRecebida = parseFloat(document.getElementById('porcentagemInput').value);
+      const valorConversao = parseFloat(document.getElementById('conversaoInput').value);
+
+      if (isNaN(numeroMaos) || isNaN(bbPor100) || isNaN(porcentagemRecebida) || isNaN(valorConversao)) {
+        alert('Por favor, insira valores válidos.');
+        return;
+      }
+
+      if (porcentagemRecebida > 100) {
+        alert('Porcentagem recebida não pode ser maior que 100%.');
+        return;
+      }
+
+      const resultadoFinal = calcularResultado(numeroMaos, bbPor100, porcentagemRecebida, valorConversao);
+      const resultadoElement = document.getElementById('resultado');
+      resultadoElement.textContent = `Valor a receber: ${formatarDinheiro(resultadoFinal)}`;
+    }
+  </script>
+</body>
+</html>
